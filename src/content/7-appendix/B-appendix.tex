@@ -1,0 +1,62 @@
+Two functions are presented in this appendix. The first is a helper function that adds padding to turn a rectangular map into a square.
+
+\begin{figure}[hbt!]
+	\begin{center}
+		\begin{lstlisting}[language=Kotlin,label={lst:appendix-b-code-1}]
+private fun calcCoordinates(min: Double, max: Double, size: Double, bigger: Double): Pair<Double, Double> {
+
+	if (size == bigger) {
+		return min to max
+	}
+
+	val delta = bigger - size
+	val half = delta / 2
+
+	return (min - half) to (max + half)
+}
+		\end{lstlisting}
+	\end{center}
+	\caption{Calculating padded coordinates}
+	\label{fig:appendix-b-1}
+\end{figure}
+
+\clearpage
+The second function that we show computes the x and y coordinates of the cropped map within the original map, taking into account that some aditional padding is desired.
+\begin{figure}[hbt!]
+    \begin{center}
+        \begin{lstlisting}[language=Kotlin,label={lst:appendix-b-code-2}]
+fun getBounds(ids: List<Long>): Bounds {
+
+	val cities = ids.mapNotNull { cityRepository.findByIdOrNull(it) }
+
+	val minX = cities.minOf { it.x / 100 * image.width }
+	val maxX = cities.maxOf { it.x / 100 * image.width }
+
+	val minY = cities.minOf { it.y / 100 * image.height }
+	val maxY = cities.maxOf { it.y / 100 * image.height }
+
+	val width = maxX - minX
+	val height = maxY - minY
+	val bigger = max(width, height)
+
+	val (startX, endX) = calcCoordinates(minX, maxX, width, bigger)
+	val (startY, endY) = calcCoordinates(minY, maxY, height, bigger)
+
+	val padding = 200
+	val x = startX - padding
+	val w = (endX - startX) + 2 * padding
+	val y = startY - padding
+	val h = (endY - startY) + 2 * padding
+
+	val percentMinX = x / image.width.toDouble()
+	val percentMaxX = (x + w) / image.width.toDouble()
+	val percentMinY = y / image.height.toDouble()
+	val percentMaxY = (y + h) / image.height.toDouble()
+
+	return Bounds(percentMinX, percentMaxX, percentMinY, percentMaxY)
+}
+        \end{lstlisting}
+    \end{center}
+    \caption{Determining the bounds for the cropped map}
+    \label{fig:appendix-b-2}
+\end{figure}

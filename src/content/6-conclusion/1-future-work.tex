@@ -1,0 +1,17 @@
+\section{Future Work}\label{sec:future-work}
+Since we opted to implement the AR version of the cube, this for now works only on one person's device. What can be added on top of this AR mode is
+the shared and collaborative experience among multiple persons. GLAM institutions could mostly take advantage of this experience as it allows a
+larger group of people to explore and perceive the visualization in the same way but from different perspectives. An art expert could lead the group
+and interact with the representation and the rest of the group would have a chance to see the same changes to the presentation on their devices.
+
+This shared AR world would require additional properties/features in order to benefit from it. Unlike the rest of the application
+which works over HTTP(S), sharing data between multiple devices would require TCP-based communication, likely using the WebSocket API. A central
+server would keep track of the state, which clients would request to update, and the server would then save these changes and push them to all the
+other clients, to keep a consistent representation for all the users.
+
+Since the shared AR world adds more complexity to the application, we have not explored this approach or tried to implement it in our work.
+Based on the information given above, this could present an interesting opportunity for future work research.
+
+We used the space-time cube for representing an artist's life with the possibility to present it using the AR viewer. There might be other 3D
+visualizations which would be engaging for this experience as well. Exploring additional visualizations could benefit the representation of an
+artist's life and contribute to the research of this field.

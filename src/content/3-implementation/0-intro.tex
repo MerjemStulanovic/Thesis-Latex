@@ -1,0 +1,23 @@
+In this chapter, we will talk about the conceptual development and implementation part of the thesis. As previously said, the space-time cube was chosen to present
+artists' lives. Several technologies were used in order to implement this visualization, more about them was mentioned in \Cref{ch:background}.
+
+The original concept of the space-time cube along with the examples we have seen was just the starting point of creating the visualization. It was
+necessary to decide which parts of their lives to include in the cube. Also, it was necessary to decide which external events to integrate in it,
+to make the visualization more meaningful. Additional information was included, like exhibitions artists attended, important stays in their life,
+minor/major historical events that might have influenced artists' lives, connections between multiple artists, and others. These were combined
+with the space-time path that represents the artists' movement during their life. Each of these parameters will be explained in detail and the
+most important and interesting examples of the code will be mentioned.
+
+\clearpage
+
+Before presenting the implementation aspects of the representation of the space-time cube, we present parameters and features that were selected for the representation in the cube:
+\begin{itemize}
+    \item The first feature represents the space-time path of an artist's life. The path will show the activity during their life. This trajectory will include locations of their stays and the length of each stay. Some stays could be important for different reasons, because of this, they will be specially marked. The choice of this feature was rather obvious, because visualizing a movement path is the primary purpose of a space-time cube.
+    \item The second feature is related to the artistic part of an artist's life. This includes the artworks they created during their life. During our literature review, we saw representations that only concentrated on the artist's work, but did not include information on the life. Adding this feature to the space-time path combines multiple different representations into a single one.
+    \item The third important feature which will be included are connections between artists. We saw examples of representations that show connections and relations between people, so including this aspect of an artist's life in the same visualization allows us to explore multiple space-time paths and examine the potential connections and relations between artists.
+    \item The fourth feature we decided to represent are the exhibitions. These play important part in the artists' lives because they reflect on events attended by multiple artists and can help art experts to determine faster which artists were connected by mutual exhibitions.
+    \item The last feature that we decided to implement are records of historic events which might have influenced artists' lives. These will not be related to artists closely, but will be included in the visualization independently. By observing these events, users will be able to see if some of them influenced the artists' life paths, for example, caused them to move elsewhere.
+\end{itemize}
+
+Since this is a 3D visualization and the AR part is animated through a mobile device, only the screenshots of the visualization will be
+included in this chapter.

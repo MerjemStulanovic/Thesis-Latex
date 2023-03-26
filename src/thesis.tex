@@ -1,0 +1,299 @@
+% Copyright (C) 2014-2020 by Thomas Auzinger <thomas@auzinger.name>
+
+\documentclass[draft,final]{vutinfth} % Remove option 'final' to obtain debug information.
+
+% Load packages to allow in- and output of non-ASCII characters.
+\usepackage{lmodern}        % Use an extension of the original Computer Modern font to minimize the use of bitmapped letters.
+\usepackage[T1]{fontenc}    % Determines font encoding of the output. Font packages have to be included before this line.
+\usepackage[utf8]{inputenc} % Determines encoding of the input. All input files have to use UTF8 encoding.
+\usepackage[fontsize=12pt]{fontsize}
+\usepackage[htt]{hyphenat}
+
+% Extended LaTeX functionality is enables by including packages with \usepackage{...}.
+\usepackage{amsmath}    % Extended typesetting of mathematical expression.
+\usepackage{amssymb}    % Provides a multitude of mathematical symbols.
+\usepackage{mathtools}  % Further extensions of mathematical typesetting.
+\usepackage{microtype}  % Small-scale typographic enhancements.
+\usepackage[inline]{enumitem} % User control over the layout of lists (itemize, enumerate, description).
+\usepackage{multirow}   % Allows table elements to span several rows.
+\usepackage{booktabs}   % Improves the typesettings of tables.
+\usepackage{subcaption} % Allows the use of subfigures and enables their referencing.
+\usepackage[ruled,linesnumbered,algochapter]{algorithm2e} % Enables the writing of pseudo code.
+\usepackage[usenames,dvipsnames,table]{xcolor} % Allows the definition and use of colors. This package has to be included before tikz.
+\usepackage{nag}       % Issues warnings when best practices in writing LaTeX documents are violated.
+\usepackage{pdfpages}
+\usepackage{todonotes} % Provides tooltip-like todo latex-tips.
+\usepackage{hyperref}  % Enables cross linking in the electronic document version. This package has to be included second to last.
+\usepackage[nameinlink]{cleveref}
+\usepackage{listings}
+\usepackage{tikz}
+\usepackage[square, numbers, sort]{natbib}
+\usepackage{lipsum} % Enables the generation of glossaries and lists fo acronyms. This package has to be included last.
+
+\lstset{
+    basicstyle=\footnotesize\ttfamily,        % the size of the fonts that are used for the code
+    breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+    breaklines=true,                 % sets automatic line breaking
+    captionpos=b,                    % sets the caption-position to bottom
+    commentstyle=\color{gray},    % comment style
+    keywordstyle=\color[HTML]{A55C86},
+    stringstyle=\color{green!50!black},
+    showstringspaces=false,
+    extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does
+    keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code
+    numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+    numbersep=5pt,                   % how far the line-numbers are from the code
+    numberstyle=\tiny, % the style that is used for the line-numbers
+    tabsize=4,                     % sets default tabsize to 2 spaces
+    title=\lstname                   % show the filename of files included with \lstinputlisting; also
+}
+
+\lstdefinelanguage{Kotlin}{
+    alsoletter={!},
+    keywords=[1]{if, return, !in, fun, class, private, val, data, interface, null},
+    keywordstyle=[1]\color[HTML]{761629}, % light-purple
+    keywords=[2]{String, List, Sequence, T, String, CityController, City, Long, Double, CityMapService, GenerationType, Bounds, Pair},
+    keywordstyle=[2]\color[HTML]{007E8A}, % light-blue
+    keywords=[3]{list, first, tail, head, tailList, size, it, string, cityRepository, cityMapService, id, name, x, y, IDENTITY},
+    keywordstyle=[3]\color[HTML]{7D3781}, % purple
+    keywords=[4]{@RestController, @Entity, @Repository, @RequestMapping, @PostMapping, @GetMapping, @Transactional, @DeleteMapping,
+                @RequestBody, @PathVariable, @Id, @GeneratedValue, @Column},
+    keywordstyle=[4]\color[HTML]{9A892E}, % yellow
+    keywords=[5]{CityRepository, JpaRepository},
+    keywordstyle=[5]\color[HTML]{5E54AB}, % weird-blue
+    morecomment=[l]{//}, % l is for line comment
+    morecomment=[s]{/*}{*/}, % s is for start and end delimiter
+    morestring=[b]", % defines that strings are enclosed in double quotes
+    literate={0}{{\textcolor{blue}{0}}}{1}%
+        {v1}{{\textcolor{green!50!black}{v1}}}{2}%
+        {1}{{\textcolor{blue}{1}}}{1}%
+        {2}{{\textcolor{blue}{2}}}{1}%
+        {3}{{\textcolor{blue}{3}}}{1}%
+        {4}{{\textcolor{blue}{4}}}{1}%
+        {5}{{\textcolor{blue}{5}}}{1}%
+        {6}{{\textcolor{blue}{6}}}{1}%
+        {7}{{\textcolor{blue}{7}}}{1}%
+        {8}{{\textcolor{blue}{8}}}{1}%
+        {9}{{\textcolor{blue}{9}}}{1}%
+        {.0}{{\textcolor{blue}{.0}}}{2}% Following is to ensure that only periods
+        {.1}{{\textcolor{blue}{.1}}}{2}% followed by a digit are changed.
+        {.2}{{\textcolor{blue}{.2}}}{2}%
+        {.3}{{\textcolor{blue}{.3}}}{2}%
+        {.4}{{\textcolor{blue}{.4}}}{2}%
+        {.5}{{\textcolor{blue}{.5}}}{2}%
+        {.6}{{\textcolor{blue}{.6}}}{2}%
+        {.7}{{\textcolor{blue}{.7}}}{2}%
+        {.8}{{\textcolor{blue}{.8}}}{2}%
+        {.9}{{\textcolor{blue}{.9}}}{2}%
+} %
+
+\lstdefinelanguage{JavaScript}{
+    keywords=[1]{if, return, this, else, import, from, export, class, const, new, function, null},
+    keywordstyle=[1]\color[HTML]{761629}, % red
+    keywords=[2]{List, Sequence, T, String, HomeComponent, Scene, PerspectiveCamera, WebGLRenderer, BoxGeometry, MeshBasicMaterial, Mesh},
+    keywordstyle=[2]\color[HTML]{007E8A}, % light-blue
+    keywords=[3]{list, first, tail, head, tailList, size, it, string, selector, templateUrl, styleUrls, window, innerWidth, innerHeight,
+                position, scene, camera, renderer, geometry, material, cube, color, raycaster, selectedObject, intersection, length, object, castTargets, mouse},
+    keywordstyle=[3]\color[HTML]{7D3781}, % purple
+    keywords=[4]{@Component, setSize, add},
+    keywordstyle=[4]\color[HTML]{9A892E}, % yellow
+    morecomment=[l]{//}, % l is for line comment
+    morecomment=[s]{/*}{*/}, % s is for start and end delimiter
+    morestring=[b]', % defines that strings are enclosed in double quotes
+    literate={0}{{\textcolor{blue}{0}}}{1}%
+        {1}{{\textcolor{blue}{1}}}{1}%
+        {2}{{\textcolor{blue}{2}}}{1}%
+        {3}{{\textcolor{blue}{3}}}{1}%
+        {4}{{\textcolor{blue}{4}}}{1}%
+        {5}{{\textcolor{blue}{5}}}{1}%
+        {6}{{\textcolor{blue}{6}}}{1}%
+        {7}{{\textcolor{blue}{7}}}{1}%
+        {8}{{\textcolor{blue}{8}}}{1}%
+        {9}{{\textcolor{blue}{9}}}{1}%
+        {0x00ff00}{{\textcolor{blue}{0x00ff00}}}{8}%
+        {.0}{{\textcolor{blue}{.0}}}{2}% Following is to ensure that only periods
+        {.1}{{\textcolor{blue}{.1}}}{2}% followed by a digit are changed.
+        {.2}{{\textcolor{blue}{.2}}}{2}%
+        {.3}{{\textcolor{blue}{.3}}}{2}%
+        {.4}{{\textcolor{blue}{.4}}}{2}%
+        {.5}{{\textcolor{blue}{.5}}}{2}%
+        {.6}{{\textcolor{blue}{.6}}}{2}%
+        {.7}{{\textcolor{blue}{.7}}}{2}%
+        {.8}{{\textcolor{blue}{.8}}}{2}%
+        {.9}{{\textcolor{blue}{.9}}}{2}%
+} %
+
+% Define convenience functions to use the author name and the thesis title in the PDF document properties.
+\newcommand{\authorname}{Merjem Štulanović} % The author name without titles.
+\newcommand{\thesistitle}{Capturing the Life of an Artist Using Information Visualization Techniques} % The title of the thesis. The English version should be used, if it exists.
+
+% Set PDF document properties
+\hypersetup{
+    pdfpagelayout   = TwoPageRight,           % How the document is shown in PDF viewers (optional).
+    linkbordercolor = {Melon},                % The color of the borders of boxes around crosslinks (optional).
+    pdfauthor       = {\authorname},          % The author's name in the document properties (optional).
+    pdftitle        = {\thesistitle},         % The document's title in the document properties (optional).
+    pdfsubject      = {Subject},              % The document's subject in the document properties (optional).
+    pdfkeywords     = {a, list, of, keywords} % The document's keywords in the document properties (optional).
+}
+
+\linespread{1.25}
+\setpnumwidth{2.5em}        % Avoid overfull hboxes in the table of contents (see memoir manual).
+\setsecnumdepth{subsection} % Enumerate subsections.
+
+\nonzeroparskip             % Create space between paragraphs (optional).
+\setlength{\parindent}{0pt} % Remove paragraph identation (optional).
+
+%\glstocfalse   % Remove the glossaries from the table of contents.
+
+% Set persons with 4 arguments:
+%  {title before name}{name}{title after name}{gender}
+%  where both titles are optional (i.e. can be given as empty brackets {}).
+\setauthor{}{\authorname}{}{female}
+\setadvisor{}{Fabio Pittarello}{}{male}
+
+
+%%M Datum dole promijeni na datum kad predaš.
+% Required data.
+\setregnumber{882311}
+\setdate{02}{11}{2021} % Set date with 3 arguments: {day}{month}{year}.
+\settitle{\thesistitle}{\thesistitle} % Sets  the title. If your title contains commas, enclose it with additional curvy brackets (i.e., {{your title}}) or define it as a macro as done with \thesistitle.
+\setsubtitle{}{} % Sets the subtitle. Use {} if none.
+
+\setthesis{master}
+\setmasterdegree{dipl.}
+
+\setcurriculum{Data Management and Analytics}{} % Sets the English and German name of the curriculum.
+
+\begin{document}
+
+    \frontmatter % Switches to roman numbering.
+% The structure of the thesis has to conform to the guidelines at
+%  https://informatics.tuwien.ac.at/study-services
+
+    %\addtitlepage{english} % English title page.
+
+    \includepdf[pages=-]{content/front-page.pdf}
+
+%%M Ako kod vas ne treba ta izjava da si sama radila, ovu liniju obriši.
+%    \addstatementpage
+
+    \begin{acknowledgements*}
+        A number of people helped me throughout these years of my masters education at
+        Ca' Foscari University of Venice. Starting from professors who were always delivering
+        their knowledge in the best possible way, lecturers, and administrative staff at the University,
+        I would like to thank everyone who played some role in my education during these years.
+        The Computer Science Department is for sure one of the best at the University,
+        and it met all of my expectations.
+
+        I express my sincere gratitude to my mentor Prof. Fabio Pittarello for being
+        supportive, patient, and helpful during this time. He played a significant role in
+        delivering the thesis in the best possible way.
+
+        I cannot forget to thank all of my friends and colleagues that were here with me
+        during my studies. We had a lot of fun and created some beautiful memories
+        which will be cherished forever. Their friendship is one of the most important things
+        I will take with me while leaving these doors behind me.
+
+        The last words of thanks go to my family and people who helped me in any kind of
+        way during my education. If it were not for them, I would not have been able to accomplish
+        all of this. Their unselfish support was present all the time and helped me in the
+        toughest moments. I hope I get to return all of this to them one day.
+    \end{acknowledgements*}
+
+    \begin{abstract}
+        Visualizing information correctly and in a useful way is a difficult task in computer science. Information is
+        collected from many subject fields, and presenting it purposefully can often be challenging for a scientist or
+        a researcher. Not only does one have to transform the raw data into something more comprehensible, but do it
+        in a way that makes concepts more familiar. One of the most important tasks that need to be
+        fulfilled is presenting data in a proper way, compliant with the users' background and skills, in
+        order to permit them to form a mental model of the subject.
+
+        The subject field of this master's thesis is art, specifically artists and their lives, investigated through
+        computer science. This research will try to capture the life of an artist using specific information
+        visualization techniques, even enhancing the already seen ones to adjust them to this special subject field. It will
+        focus on spatio-temporal visualization techniques, adapting them to the art field, and in the end, implementing
+        all research work into an augmented reality prototype. The goal is to combine computer science and arts by
+        presenting users, like art experts, visitors of an art exhibition or a museum, with an innovative way of learning about the
+        life of an artist, summarizing the most important parts of their lives with meaningful and interactive information
+        visualization techniques.
+    \end{abstract}
+
+% Select the language of the thesis.
+    \selectlanguage{english}
+
+% Add a table of contents (toc).
+    \setcounter{tocdepth}{4}
+    \tableofcontents % Starred version, i.e., \tableofcontents*, removes the self-entry.
+
+% Switch to arabic numbering and start the enumeration of chapters in the table of content.
+    \mainmatter
+
+    \chapter{Introduction}\label{ch:introduction}
+    \input{content/1-introduction/0-intro.tex}
+    \clearpage
+    \input{content/1-introduction/1-motivation-goals.tex}
+    \input{content/1-introduction/2-problem-statement.tex}
+    \input{content/1-introduction/3-methodology-solution-approach.tex}
+    \input{content/1-introduction/4-structure.tex}
+
+    \chapter{Literature Review}\label{ch:literature-review}
+    \input{content/2-literature-review/0-intro.tex}
+    \input{content/2-literature-review/1-information-visualization.tex}
+    \input{content/2-literature-review/2-temporal-visualization.tex}
+    \input{content/2-literature-review/3-geospatial-visualization.tex}
+    \input{content/2-literature-review/4-spatio-temporal-visualization.tex}
+    \input{content/2-literature-review/5-space-time-cube.tex}
+    \input{content/2-literature-review/6-visualizing-movement.tex}
+    \input{content/2-literature-review/7-data-visualization-cultural-heritage.tex}
+    \input{content/2-literature-review/8-representing-artists-life.tex}
+    \clearpage
+    \input{content/2-literature-review/9-strengths-weaknesses-stc.tex}
+
+    \chapter{Background}\label{ch:background}
+    \input{content/4-background/0-intro.tex}
+    \clearpage
+    \input{content/4-background/1-angular.tex}
+    \input{content/4-background/2-three.js.tex}
+    \input{content/4-background/3-webXR.tex}
+    \input{content/4-background/4-spring-framework.tex}
+
+    \chapter{Concept and Implementation}\label{ch:implementation}
+    \input{content/3-implementation/0-intro.tex}
+    \input{content/3-implementation/1-general-overview.tex}
+    \input{content/3-implementation/2-homepage.tex}
+    \input{content/3-implementation/3-managing-cities.tex}
+    \input{content/3-implementation/4-managing-artists.tex}
+    \input{content/3-implementation/5-managing-exhibitions.tex}
+    \input{content/3-implementation/6-managing-historic-events.tex}
+    \input{content/3-implementation/7-space-time-cube.tex}
+    \input{content/3-implementation/8-ar-prototype.tex}
+    \input{content/3-implementation/9-specifics-backend-implementation.tex}
+
+    \chapter{Evaluation}\label{ch:evaluation}
+    \input{content/5-evaluation/0-intro.tex}
+
+    \chapter{Conclusion}\label{ch:conclusion}
+    \input{content/6-conclusion/0-intro.tex}
+    \input{content/6-conclusion/1-future-work.tex}
+
+    \appendix
+    \chapter{Detailed Database Structure}\label{ch:database-structure}
+    \input{content/7-appendix/A-appendix.tex}
+    \chapter{Code Examples}\label{ch:code-examples}
+    \input{content/7-appendix/B-appendix.tex}
+
+    \backmatter
+
+% Use an optional list of figures.
+    \listoffigures % Starred version, i.e., \listoffigures*, removes the toc entry.
+
+% Use an optional list of tables.
+    \cleardoublepage % Start list of tables on the next empty right hand page.
+%    \listoftables % Starred version, i.e., \listoftables*, removes the toc entry.
+
+% Add a bibliography.
+    \bibliographystyle{ieee-custom}
+    \bibliography{thesis}
+
+\end{document}

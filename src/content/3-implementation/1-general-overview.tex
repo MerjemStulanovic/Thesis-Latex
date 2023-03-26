@@ -1,0 +1,40 @@
+\section{General Overview}\label{sec:general-overview}
+Before every part of our implementation is explained in detail, some general information about the visualization will be mentioned. As it will be detailled in \Cref{ch:background},
+a web application for visualizing the space-time cube was implemented. It consists of frontend and backend parts. For the frontend part, Angular,
+Three.js, and WebXR technologies were used, and for the backend part, Spring Framework.
+
+\subsection{Backend}\label{subsec:backend}
+The task of the backend was to manage the data -- save the information the user enters and provide the appropriate ones during the creation of the
+cube. Since the cube is a spatio-temporal representation, for the spatial part some sort of a map was needed. The users enter the required cities on the
+entire map by themselves, and the backend part manages the selection of the right portion of the map based on the provided cities for the chosen artists.
+Including the whole map of the world in the cube would not be practical as only the part the artists lived in is important. More about this
+concept will be discussed later in \Cref{subsec:map-cropping}.
+
+The data types included in our database, not counting the helper tables, are \texttt{Artist}, \texttt{City}, \texttt{Residence}, \texttt{Exhibition}, and
+\texttt{HistoricEvent}. \texttt{Artist} contains the name, the surname, and the list of locations artists lived in during their life. \texttt{City}
+contains the city name and the city's x and y coordinates on the map. \texttt{Residence} contains the city name, the start and end date, the number of
+artworks the artist created during their stay, and a label to describe if the stay was important and why. \texttt{Exhibition} contains the title of the
+exhibition, the city where it was held, its start and end date, and the list of artists who attended it. \texttt{HistoricEvent} entity looks very similar,
+but instead of the list of the artists, it contains the list of the cities where the event took place. More about the structure of the backend is
+available in \Cref{sec:specifics-backend-implementation}.
+
+\clearpage
+
+\subsection{Frontend}\label{subsec:frontend}
+The frontend is the web application which the user sees and interacts with. The application gives access to several functionalities such as:
+
+\begin{itemize}
+    \item managing the cities on the map,
+    \item managing the list of artists,
+    \item managing the exhibitions artists attended,
+    \item managing the historical events that may have influenced artists' work.
+\end{itemize}
+
+For the presentation of the cube, the user has two options:
+
+\begin{itemize}
+    \item running the representation in a desktop web browser,
+    \item running the representation in an AR viewer for mobile devices.
+\end{itemize}
+
+Everything on the frontend part is managed by the user. None of the data is taken via external sources, so the user has full control of it.

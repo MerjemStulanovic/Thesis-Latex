@@ -1,0 +1,29 @@
+\section{WebXR}\label{sec:webxr}
+This section presents WebXR. The information was mostly taken from~\citep{webapismdnwebxr}.
+
+WebXR is an API for web content that uses augmented (AR) or virtual reality (VR). It was developed by Mozilla in 2014 under the name WebVR.
+Later in 2018, with the addition of AR, it was merged into WebXR. Both AR and VR paradigms belong to the mixed reality (MR) or cross
+reality (XR), hence the name. However, WebXR does not support rendering of objects. This is entirely up to the developer, that they can use the previously mentioned WebGL API\@.
+
+WebXR and its features are not supported on all browsers and versions,\footnote{Information on which browsers support
+WebXR and corresponding features can be found at \\ \url{https://developer.mozilla.org/en-US/docs/Web/API/WebXR_Device_API} and
+\url{https://immersiveweb.dev}} so it is still in active development at the time of writing. This may present a limitation for some projects
+because developers have to take into consideration the device type, the environment in which it will be used, etc.
+
+As we already said, WebXR supports both augmented reality and virtual reality. Which one we want to use depends on the type of experience
+we want to create for the user. Each paradigm requires a different approach and sometimes also a specific device for visualizing the project.
+
+VR and AR paradigms are mapped to:
+\begin{enumerate}
+    \item Virtual reality -- the entire image we see is digitally created by the application. There are two VR modes available: \emph{inline} and
+    \emph{immersive-vr}. The first one is rendered within the web browser and does not require special hardware device to display. The latter
+    requires a headset to render the scene which can be seen by the user’s eyes.
+    \item Augmented reality -- this mode renders the image in the real-world environment around us. Since this is always an immersive
+    experience, we only have one mode -- \emph{immersive-ar}. Types of devices that can be used to explore AR are phones/tablets and transparent
+    glasses.
+\end{enumerate}
+
+In the implementation part, in order to visualize the cube in AR mode, we used the latest Chrome version on an Android device and the
+XRViewer application for an iPhone device.
+
+For further reference and a deeper understanding of how to create an application in AR/VR, please refer to~\citep{baruah2021ar}.

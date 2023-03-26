@@ -1,0 +1,86 @@
+\section{Three.js}\label{sec:three.js}
+This section presents the Three.js library. The mentioned information was taken from~\citep{dirksen2013learning}. Also, an
+example~\citep{threejsdocs} will be presented of how to create a 3D cube.
+
+Three.js is a JavaScript library and API (application programming interface) for creating 3D graphics in a web browser. It was released by
+Ricardo Cabello in 2010 on GitHub. The library provides an easy-to-use JavaScript API around the WebGL features without having to learn WebGL
+in depth since programming it directly is very complex and error-prone.
+
+\clearpage
+
+Three.js makes it easy to:
+\begin{itemize}
+    \item Build both simple and complex 3D geometries.
+    \item Animate and move objects in a 3D scene.
+    \item Add textures and materials to the objects.
+    \item Use various light sources to illuminate the scene.
+\end{itemize}
+
+The main components for displaying anything with Three.js are the scene, camera, and renderer, which are used to render the scene with the
+camera. Code example below shows how to create a simple 3D cube.
+
+\begin{figure}[hbt!]
+    \begin{center}
+        \begin{lstlisting}[language=JavaScript,label={lst:threejs-code-1},belowskip=-1 \baselineskip]
+const scene = new Scene();
+const camera = new PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+const renderer = new WebGLRenderer();
+renderer.setSize( window.innerWidth, window.innerHeight );
+        \end{lstlisting}
+    \end{center}
+    \caption{Main components in Three.js}
+    \label{fig:figure4.3}
+\end{figure}
+
+The first line creates the scene, which is used to store objects. Then the camera object is created using the \texttt{PerspectiveCamera}.
+Three.js has many additional cameras such as \texttt{ArrayCamera}, \texttt{CubeCamera}, \texttt{OrthographicCamera}, but the
+\texttt{PerspectiveCamera} is the one that resembles how the human eye sees. There are multiple attributes the \texttt{PerspectiveCamera}
+uses: field of view, aspect ratio, near, and far (respectively).
+
+The renderer is defined next, and the library has additional renderers besides the \texttt{WebGLRenderer} for those who use older browsers or do not
+have the support for WebGL. After creating the renderer instance, it is important to set the size at which to render the application. This is done by
+using the \texttt{setSize()} function.
+
+\clearpage
+
+After the scene is created, it is necessary to create an object to add into the scene.
+
+\begin{figure}[hbt!]
+    \begin{center}
+        \begin{lstlisting}[language=JavaScript,label={lst:threejs-code-2},belowskip=-1 \baselineskip]
+const geometry = new BoxGeometry( 1, 1, 1 );
+const material = new MeshBasicMaterial( { color: 0x00ff00 } );
+const cube = new Mesh( geometry, material );
+scene.add( cube );
+camera.position.z = 5;
+        \end{lstlisting}
+    \end{center}
+    \caption{Creating an object in Three.js}
+    \label{fig:figure4.4}
+\end{figure}
+
+\texttt{BoxGeometry} creates a cube, and in addition to creating the cube, we need a material to color it. \texttt{MeshBasicMaterial} is one
+of the available materials in the library, and it contains attributes such as: the color of the material, how reflective it is, whether it has
+transparency, whether it emits light, how metallic it is, whether it should use a texture, etc. This allows us to easily define materials which mimic
+their real world counterparts.
+
+Lastly, everything is tied together by using a \texttt{Mesh} object to merge the geometry and corresponding material so
+that it is possible to insert it into the scene. For this, the created object is added to the scene using \texttt{scene.add()}. To avoid the camera
+and the cube being inside each other, the camera has to be moved out in a proper position.
+
+After the scene and the object within it are specified, the last thing to do is to render the scene using the function \texttt{animate()}.
+
+\begin{figure}[hbt!]
+    \begin{center}
+        \begin{lstlisting}[language=JavaScript,label={lst:threejs-code-3},belowskip=-1 \baselineskip]
+function animate() {
+    requestAnimationFrame( animate );
+    renderer.render( scene, camera );
+}
+        \end{lstlisting}
+    \end{center}
+    \caption{Rendering the scene in Three.js}
+    \label{fig:figure4.5}
+\end{figure}
+
+\clearpage

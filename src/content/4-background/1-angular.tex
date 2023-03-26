@@ -1,0 +1,61 @@
+\section{Angular}\label{sec:angular}
+This section will give a basic introduction to Angular. The information was mostly taken from~\citep{angular} and~\citep{murray2018ng}
+which can be consulted for further reference.
+
+Angular is an open-source framework for web applications built on TypeScript. It was developed by Google in 2010 and the first version was
+known as AngularJS. At the time of writing, the latest version is Angular 15 released in November 2022.
+
+Angular, as a development platform, includes:
+\begin{enumerate}
+    \item A framework based on components for creating web applications.
+    \item A number of libraries that include many features such as routing, forms management, client-server communication, and others.
+    \item A set of developer tools for developing, building, testing, and updating the code.
+\end{enumerate}
+
+Components are the building blocks of Angular architecture. We use them as custom-made HTML tags that have specific functionalities linked to
+them.
+
+\begin{figure}[hbt!]
+    \begin{center}
+        \begin{lstlisting}[language=JavaScript,label={lst:angular-code-1},belowskip=-1 \baselineskip]
+import { Component } from '@angular/core';
+
+@Component({
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.css']
+})
+
+export class HomeComponent {
+    // ...
+}
+        \end{lstlisting}
+    \end{center}
+    \caption{Example of an Angular component}
+    \label{fig:figure4.1}
+\end{figure}
+
+The \texttt{import} statement specifies which modules to use to write the code. In this case, we are importing the
+\texttt{Component} module. Next, we need to declare the component. \texttt{@Component} is called a decorator - which can be thought of as
+metadata added to the code. The \texttt{selector} inside acts as a new tag to use in the HTML file of the component, so the tag will be
+\texttt{<app-home>}. The \texttt{templateUrl} selector loads the template from the \texttt{home.component.html} file. The \texttt{styleUrls}
+loads the CSS file associated to style the component. By default, the style will only apply to the given component and this approach Angular
+uses is called \emph{style-encapsulation}.
+
+After the component is created, it is necessary to load it. In order to do that, it is mandatory to add the component tag to the related template
+file.
+
+\begin{figure}[hbt!]
+    \begin{center}
+        \begin{lstlisting}[language=HTML,label={lst:angular-code-2},belowskip=-1 \baselineskip]
+<div>
+    <app-home></app-home>
+</div>
+        \end{lstlisting}
+    \end{center}
+    \caption{Loading Angular component in HTML file}
+    \label{fig:figure4.2}
+\end{figure}
+
+This was a basic introduction to Angular with an example of creating and loading a simple component. The next section will give us
+insight into the Three.js library, also used in the frontend.

@@ -1,0 +1,91 @@
+The full definitions of our database entities used to store the artist data can be seen in this appendix.
+
+\begin{table}[ht]
+    \begin{center}
+        \begin{tabular}{|c|c|}
+            \hline
+            Column name & Data type\\ \hline\hline
+            id & \texttt{Long} (PK) \\\hline
+            name & \texttt{String} \\\hline
+            surname & \texttt{String} \\\hline
+            residences & \texttt{Set<Residence>} \\\hline
+        \end{tabular}
+    \end{center}
+    \caption{Artist entity definition}
+    \label{tab:artist-entity}
+\end{table}
+
+\begin{table}[ht]
+    \begin{center}
+        \begin{tabular}{|c|c|}
+            \hline
+            Column name & Data type\\ \hline\hline
+            id & \texttt{Long} (PK) \\\hline
+            name & \texttt{String} \\\hline
+            x & \texttt{Double} \\\hline
+            y & \texttt{Double} \\\hline
+        \end{tabular}
+    \end{center}
+    \caption{City entity definition}
+    \label{tab:city-entity}
+\end{table}
+
+\begin{table}[ht]
+    \begin{center}
+        \begin{tabular}{|c|c|}
+            \hline
+            Column name & Data type\\ \hline\hline
+            id & \texttt{Long} (PK) \\\hline
+            title & \texttt{String} \\\hline
+            city & \texttt{City} \\\hline
+            startYear & \texttt{Int} \\\hline
+            startMonth & \texttt{Int} \\\hline
+            startDay & \texttt{Int} \\\hline
+            endYear & \texttt{Int} \\\hline
+            endMonth & \texttt{Int} \\\hline
+            endDay & \texttt{Int} \\\hline
+            artists & \texttt{Set<Artist>} \\\hline
+        \end{tabular}
+    \end{center}
+    \caption{Exhibition entity definition}
+    \label{tab:exhibition-entity}
+\end{table}
+
+\begin{table}[ht]
+    \begin{center}
+        \begin{tabular}{|c|c|}
+            \hline
+            Column name & Data type\\ \hline\hline
+            id & \texttt{Long} (PK) \\\hline
+            name & \texttt{String} \\\hline
+            startYear & \texttt{Int} \\\hline
+            startMonth & \texttt{Int} \\\hline
+            startDay & \texttt{Int} \\\hline
+            endYear & \texttt{Int} \\\hline
+            endMonth & \texttt{Int} \\\hline
+            endDay & \texttt{Int} \\\hline
+            city & \texttt{Set<City>} \\\hline
+        \end{tabular}
+    \end{center}
+    \caption{Historic event entity definition}
+    \label{tab:historic-event-entity}
+\end{table}
+
+\begin{table}[ht]
+    \begin{center}
+        \begin{tabular}{|c|c|}
+            \hline
+            Column name & Data type\\ \hline\hline
+            id & \texttt{Long} (PK) \\\hline
+            city & \texttt{City} \\\hline
+            fromYear & \texttt{Int} \\\hline
+            toYear & \texttt{Int} \\\hline
+            numberOfArtworks & \texttt{Int} \\\hline
+            important & \texttt{Boolean} \\\hline
+            importantDescription & \texttt{String} \\\hline
+            connections & \texttt{Set<Artist>} \\\hline
+        \end{tabular}
+    \end{center}
+    \caption{Residence entity definition}
+    \label{tab:residence-entity}
+\end{table}

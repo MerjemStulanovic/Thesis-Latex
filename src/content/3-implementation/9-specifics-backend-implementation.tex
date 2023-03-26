@@ -1,0 +1,114 @@
+\section{Technical Features of the Backend Implementation}\label{sec:specifics-backend-implementation}
+In this section we will concentrate on the features of the backend implementation of the project. The structure of the backend will be mentioned,
+along with the detailed explanation of the main functionalities implemented in the application.
+
+\subsection{Structure}\label{subsec:structure}
+Backend of the application is structured as a 3-layer architecture composed of controllers, services, and repositories. In addition, DTO (data
+transfer object) classes are defined to facilitate communication with the frontend.
+\clearpage
+
+Next we will provide a list of controllers used in the implementation and briefly describe their usage:
+\begin{itemize}
+    \item Artist controller -- provides the options to get all artists, create a new artist, edit and delete the existing artist.
+    \item City controller -- provides the options to get all cities, create a new city, edit existing city's name, delete the city. In addition, this controller also handles cropping the map. One route returns the coordinates of a cropped map within the full map, and
+            a second one allows the frontend to retrieve the image of the cropped map.
+    \item Exhibition controller -- provides the options to get all exhibitions, edit or delete existing exhibitions.
+    \item Historic event controller -- provides identical options as the exhibition controller.
+\end{itemize}
+
+The service layer in most cases just routes the methods to the repositories and is not described in detail. One exception is the CityMap service
+which handles the cropping of the map explained in \Cref{subsec:map-cropping}.
+
+Overall, this is the list of the entities found in data layer:
+\begin{itemize}
+    \item Artist
+    \item City
+    \item Residence -- contains information about cities artists lived in and the corresponding time period
+    \item Exhibition
+    \item Historic event
+\end{itemize}
+
+A detailed definition of these entities can be found in \Cref{ch:database-structure}.
+
+\subsection{Map Cropping}\label{subsec:map-cropping}
+As mentioned before, the whole map is not shown in the visualization of the cube. The map is cropped to the portion which includes all the cities
+that need to be presented for the visualization of the artists' life paths. Cropping the map is a somewhat specific operation in the application, so
+it will be explained in detail.
+
+Frontend communicates to the backend which cities are required. Initially, the cities' positions on the map are saved as percentages relative to the
+size of the complete map on the screen. The first step is to convert these units from the percentages to pixels. Then, we determine the smallest x
+and y coordinates, as well as the largest. This represents the beginning and the ending corners of the cropped map. Based on this, the width and the
+height of the map are easily determined. However, since these values are calculated according to the locations of the cities, it is not guaranteed
+that the width and the height of the cropped region will be the same. To make sure that we get a square required for the cube, additional padding
+might be necessary, as illustrated in \Cref{fig:figuremapcropping}.
+
+\Cref{fig:figuremapcropping} presents us with a visual solution to this problem. We start by determining the bigger of the two dimensions, which is
+in our case the width. For the smaller of those two, it needs to be increased to the size of the larger one to get a square. This is done by adding
+padding on both sides of the smaller one. In order to add the padding, the smaller dimension is subtracted from the bigger and the result is divided
+by two. This is the padding that needs to be added to the start coordinates -- City 1 in the figure (in this case, the padding is subtracted from the
+start coordinates because we need the new coordinates which are smaller than our start ones). The result coordinates are marked as S'. The same
+is done for the end coordinates -- City 2 in the figure, we add the padding because we need the new coordinates which are further from our end ones.
+The result coordinates are marked as E'. From now on, we assume that the start and end coordinates for both axes are brought to the same form -- the
+width and the height are now the same.
+
+Additionally, it is not visually pleasing, as seen in \Cref{fig:figuremapcropping} to have the start and end cities' coordinates on the edges of the
+cropped map, so a small padding is added here as well. The procedure of adding this padding is similar to the one already explained (subtracting
+the padding from the start coordinates, and adding the padding to the end coordinates). Then, based on the values of the new start and end
+coordinates in pixels, the map is cropped accordingly and sent to the frontend. However, as already mentioned, the frontend also needs to know the
+position of the start and end coordinates of the cropped map relative to their position on the original map. Because of this, the start and end
+coordinates of the cropped map are divided by the width and the height of the original map in order to get the corresponding values that represent
+the positions of the coordinates on the original map in percentages. These values are also sent to frontend as bounds and based on them, the frontend
+can calculate where the correct positions of the cities on the cropped map is. This was explained in \Cref{subsec:technical-specifics-stc} and seen
+in \Cref{fig:figure3.13}. Code example for this functionality can be found in \Cref{ch:code-examples}.
+
+\begin{figure}[hbt!]
+    \begin{center}
+        \begin{tikzpicture}
+            \draw[-] (-5, -5) -- (-5, 5);
+            \draw[-] (-5, 5) -- (5, 5);
+            \draw[-] (5, -5) -- (5, 5);
+            \draw[-] (-5, -5) -- (5, -5);
+            %
+            \draw[dashed] (-3, -3) -- (-3, 3);
+            \draw[dashed] (-3, 3) -- (3, 3);
+            \draw[dashed] (3, -3) -- (3, 3);
+            \draw[dashed] (-3, -3) -- (3, -3);
+            %
+            \draw[-] (-3, -1.8) -- (-3, 1.8);
+            \draw[-] (-3, 1.8) -- (3, 1.8);
+            \draw[-] (3, -1.8) -- (3, 1.8);
+            \draw[-] (-3, -1.8) -- (3, -1.8);
+            %
+            %\node[] at (-1, -0.2) {\footnotesize $(0.4,0.5) \mapsto (0.\overline 3,0.5)$};
+            %
+            \node at (-5,5) [circle,fill,inner sep=1.5pt]{};
+            \node[] at (-5.4, 5) {S};
+
+            \node at (5,-5) [circle,fill,inner sep=1.5pt]{};
+            \node[] at (5.4, -5) {E};
+
+            \node at (-3,3) [circle,fill,inner sep=1.5pt]{};
+            \node[] at (-3.4, 3) {S'};
+
+            \node at (3,-3) [circle,fill,inner sep=1.5pt]{};
+            \node[] at (3.4, -3) {E'};
+
+            %
+            \node at (-3,1.8) [circle,fill,inner sep=1.5pt]{};
+            \node[] at (-3.7, 1.8) {\footnotesize City 1};
+
+            \node at (1.5,0.6) [circle,fill,inner sep=1.5pt]{};
+            \node[] at (1.5, 0.3) {\footnotesize City 3};
+
+            \node at (-0.6,-0.5) [circle,fill,inner sep=1.5pt]{};
+            \node[] at (-0.6, -0.9) {\footnotesize City 4};
+
+            \node at (3,-1.8) [circle,fill,inner sep=1.5pt]{};
+            \node[] at (3.7, -1.8) {\footnotesize City 2};
+        \end{tikzpicture}
+    \end{center}
+    \caption{Map cropping and size adjustment}
+    \label{fig:figuremapcropping}
+\end{figure}
+
+\clearpage
